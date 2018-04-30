@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <style>
+
+        body, html {
+            height: 100%;
+        }
+
+        .pill {
+            border-radius: 1000px;
+            min-width: 4.5em;
+        }
+
+        .logo-badge {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border: 40px solid #171516;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+        }
+
+        .logo-github {
+            position: absolute;
+            right: -32px;
+            top: -32px;
+            transform: rotate(45deg);
+        }
+
+        footer {
+            background: #f5f5f5;
+            height: 48px;
+            line-height: 48px;
+        }
+
+        .container {
+            max-width: 42em;
+            margin-top: 80px;
+            margin-bottom: 1em;
+        }
+
+        p {
+            margin-bottom: 0;
+        }
+
+        li, button {
+            margin-top: .75em;
+        }
+
+        .usage {
+            margin-top: 3em;
+        }
+    </style>
+    <title>Emitter</title>
+</head>
+<body class="h-100 d-flex flex-column">
+<div class="logo-badge">
+    <a href="https://github.com/zunpiau/emitter" class="logo-github">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RERCMUIwOUY4NkNFMTFFM0FBNTJFRTMzNTJEMUJDNDYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RERCMUIwOUU4NkNFMTFFM0FBNTJFRTMzNTJEMUJDNDYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkU1MTc4QTJBOTlBMDExRTI5QTE1QkMxMDQ2QTg5MDREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkU1MTc4QTJCOTlBMDExRTI5QTE1QkMxMDQ2QTg5MDREIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+jUqS1wAAApVJREFUeNq0l89rE1EQx3e3gVJoSPzZeNEWPKgHoa0HBak0iHiy/4C3WvDmoZ56qJ7txVsPQu8qlqqHIhRKJZceesmhioQEfxTEtsoSpdJg1u/ABJ7Pmc1m8zLwgWTmzcw3L+/te+tHUeQltONgCkyCi2AEDHLsJ6iBMlgHL8FeoqokoA2j4CloRMmtwTmj7erHBXPgCWhG6a3JNXKdCiDl1cidVbXZkJoXQRi5t5BrxwoY71FzU8S4JuAIqFkJ2+BFSlEh525b/hr3+k/AklDkNsf6wTT4yv46KIMNpsy+iMdMc47HNWxbsgVcUn7FmLAzzoFAWDsBx+wVP6bUpp5ewI+DOeUx0Wd9D8F70BTGNjkWtqnhmT1JQAHcUgZd8Lo3rQb1LAT8eJVUfgGvHQigGp+V2Z0iAUUl8QH47kAA1XioxIo+bRN8OG8F/oBjwv+Z1nJgX5jpdzQDw0LCjsPmrcW7I/iHScCAEDj03FtD8A0EyuChHgg4KTlJQF3wZ7WELppnBX+dBFSVpJsOBWi1qiRgSwnOgoyD5hmuJdkWCVhTgnTvW3AgYIFrSbZGh0UW/Io5Vp+DQoK7o80pztWMemZbgxeNwCNwDbw1fIfgGZjhU6xPaJgBV8BdsMw5cbZoHsenwYFxkZzl83xTSKTiviCAfCsJLysH3POfC8m8NegyGAGfLP/VmGmfSChgXroR0RSWjEFv2J/nG84cuKFMf4sTCZqXuJd4KaXFVjEG3+tw4eXbNK/YC9oXXs3O8NY8y99L4BXY5cvLY/Bb2VZ58EOJVcB18DHJq9lRsKr8inyKGVjlmh29mtHs3AHfuhCwy1vXT/Nu2GKQt+UHsGdctyX6eQyNvc+5sfX9Dl7Pe2J/BRgAl2CpwmrsHR0AAAAASUVORK5CYII=">
+    </a>
+</div>
+<div class="mb-auto"></div>
+<div class="container">
+    <div class="text-center">
+        <h3>Emitter</h3>
+        <p>使用 bookmarklet 发送当前网址或高亮文字到其他浏览器</p>
+        <button type="button" class="btn btn-primary btn-outline-primary pill" id="btn-go">GO</button>
+    </div>
+    <div class="usage" id="usage" style="display: none">
+        <ol>
+            <li><p>将以下代码保存为书签</p>
+                <div class="card">
+                    <div class="card-body">
+                        <code class="placeholder">
+                            javascript:text=window.getSelection().toString().trim();if(text.length===0)text=window.location.href;xhr=new
+                            XMLHttpRequest();xhr.open("post","https://emit.shadowland.cn/api/emit/{uid}",true);xhr.send(text);xhr.onreadystatechange=function(){if(xhr.readyState===4){if(xhr.status===200)alert("OK");else{alert(xhr.status);}}}
+                        </code>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <p>在另一浏览器保存以下网址为书签</p>
+                <div class="card">
+                    <div class="card-body placeholder">
+                        https://emit.shadowland.cn/api/emit/{uid}
+                    </div>
+                </div>
+            </li>
+            <li><p>使用</p>
+                <p>
+                    选中页面上一段文本，点击第一个书签将发送文字到服务器。点击第二个书签即可收到文字
+                </p>
+                <p>未选择文本的情况下将发送页面网址，点击第二个书签即跳转</p>
+                <p>NOTE: 限制 256 个字符，仅保存15分钟</p>
+            </li>
+        </ol>
+    </div>
+</div>
+<footer class="mt-auto w-100 text-center">
+    <p class="mb-0">by <a href="https://github.com/zunpiau">zunpiau</a></p>
+</footer>
+<script>
+    $(document).ready(function () {
+        var placeholder = "{uid}";
+        $('#btn-go').click(function () {
+            $.ajax({
+                url: '/api/uid',
+                headers: {
+                    'Accept': 'text/plain'
+                },
+                method: 'POST',
+                dataType: "text"
+            }).done(function (result, status) {
+                const reg = new RegExp(placeholder);
+                $('.placeholder').each(function (index, element) {
+                    $(element).text(function (i, text) {
+                        return text.replace(reg, result).trim();
+                    });
+                });
+                placeholder = result;
+                $('#usage').show(400);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus);
+            });
+        });
+    })
+</script>
+</body>
+</html>

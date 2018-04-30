@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://ch.qos.logback/xml/ns/logback"
+               xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback https://raw.githubusercontent.com/enricopulatzo/logback-XSD/master/src/main/xsd/logback.xsd"
+               debug="true">
+    <appender name="appender" class="ch.qos.logback.ext.spring.DelegatingLogbackAppender"/>
+
+    <root level="DEBUG">
+        <appender-ref ref="appender"/>
+    </root>
+</configuration>

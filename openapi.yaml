@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: A text emitter
+  description: Emit text or url to other devices
+  version: 0.0.1
+servers:
+  - url: "http://127.0.0.1:8000/api/"
+    description: local server
+  - url: "https://emit.shadowland.cn/api/"
+    description: main server
+
+paths:
+  /uid:
+    post:
+      summary: getContent user ID
+      responses:
+        '200':
+          description: return a plain text
+          content:
+            text/plain:
+              schema:
+                type: string
+  /emit/{uid}:
+    parameters:
+      - in: path
+        name: uid
+        schema:
+          type: string
+        required: true
+        description: the uid of the user to getContent
+    post:
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+        required: true
+      summary: post a url or text
+      responses:
+        '200':
+          description: OK
+    get:
+      summary: redrict to url or get text
+      responses:
+        '200':
+          description: retrun a text
+            content:
+              text/plain:
+                schema:
+                  type: string
+        '302':
+          description: redrict to url
+        '400':
+          description: no url or text
