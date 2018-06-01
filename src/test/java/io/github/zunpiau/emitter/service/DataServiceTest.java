@@ -17,6 +17,6 @@ public class DataServiceTest extends SpringTest {
         service.saveContent(uid, url);
         Assert.assertEquals(url, service.getContent(uid));
         Thread.sleep(service.getTimeout() * 1000 + 500);
-        Assert.assertEquals(null, service.getContent(uid));
+        Assert.assertNull(service.getContent(uid));
     }
 }

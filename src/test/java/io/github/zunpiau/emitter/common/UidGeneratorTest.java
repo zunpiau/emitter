@@ -17,21 +17,23 @@ public class UidGeneratorTest {
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Test
-    public void generate() {
+    public void generate() throws InterruptedException {
         ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(THREAD_COUNT);
         ConcurrentMap<String, Object> map = new ConcurrentHashMap<>(128);
         Object placeholder = new Object();
         for (int i = 0; i < THREAD_COUNT; i++) {
             executor.execute(() -> {
                 generatorLatch.countDown();
-                while (generatorLatch.getCount() != 0)
-                    ;
+                try {
+                    generatorLatch.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 map.put(generator.generate(), placeholder);
                 exitLatch.countDown();
             });
         }
-        while (exitLatch.getCount() != 0)
-            ;
+        exitLatch.await();
         Assert.assertEquals(THREAD_COUNT, map.size());
         executor.shutdown();
     }
